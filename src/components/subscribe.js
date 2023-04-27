@@ -13,31 +13,31 @@ function encode(data) {
 const Subscribe = () => {
   const [email, setEmail] = useState("")
 
-  const handleSubscribe = e => {
-    e.preventDefault()
-    const form = e.target
+  const handleSubscribe = event => {
+    event.preventDefault()
+
+    const subscribeForm = event.target
+    const formData = new FormData(subscribeForm)
+
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": "Subscribe",
-        email,
-      }),
+      body: new URLSearchParams(formData).toString(),
     })
-      .then(() => navigate(form.getAttribute("action")))
-      .catch(error => console.log(error))
+      .then(() => navigate("/"))
+      .catch(error => alert(error))
   }
+
   return (
     <div>
       <form
-        name="Subscribe"
+        name="new-Subscribe"
         method="post"
         data-netlify="true"
-        action="/subscribed"
-        data-netlify-honeypot="bot-field"
         onSubmit={handleSubscribe}
         className="w-full flex flex-col md:flex-row align-middle"
       >
+        <input type="hidden" name="form-name" value="new-Subscribe" />
         <TextField
           name="email"
           type="email"

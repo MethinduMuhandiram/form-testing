@@ -23,39 +23,30 @@ const ContactForm = () => {
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    const form = e.target
+  const handleSubmit = event => {
+    event.preventDefault()
+
+    const contactForm = event.target
+    const formData = new FormData(contactForm)
+
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": "Contact",
-        fullName,
-        company,
-        email,
-        message,
-      }),
+      body: new URLSearchParams(formData).toString(),
     })
-      .then(() => navigate(form.getAttribute("action")))
-      .catch(error => console.log(error))
+      .then(() => navigate("/"))
+      .catch(error => alert(error))
   }
 
   return (
     <div className="p-5 w-full">
       <form
-        name="Contact"
-        method="post"
         data-netlify="true"
-        action="/success"
-        data-netlify-honeypot="bot-field"
+        name="new-Contact"
+        method="post"
         onSubmit={handleSubmit}
       >
-        <p hidden>
-          <label>
-            Don’t fill this out: <input name="bot-field" onChange={() => {}} />
-          </label>
-        </p>
+        <input type="hidden" name="form-name" value="new-Contact" />
         <div className="flex flex-col md:flex-row my-5 gap-5">
           <TextField
             id="full-name"
