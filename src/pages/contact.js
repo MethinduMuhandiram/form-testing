@@ -46,9 +46,24 @@ const ContactForm = () => {
   const [mobileApp, setMobileApp] = useState(false)
   const [design, setDesign] = useState(false)
   const [seo, setSeo] = useState(false)
+  const [webApp, setWebApp] = useState(false)
+  const [social, setSocial] = useState(false)
+  const [other, setOther] = useState(false)
+
+  // const handleCheckboxChange = event => {
+  //   const itemName = event.target.name
+
+  //   setCheckedItems(prevCheckedItems => {
+  //     if (prevCheckedItems.includes(itemName)) {
+  //       return prevCheckedItems.filter(item => item !== itemName)
+  //     } else {
+  //       return [...prevCheckedItems, itemName]
+  //     }
+  //   })
+  // }
 
   const handleSubmit = e => {
-    console.log(website.name, mobileApp.name, design.name, seo.name)
+    console.log(website, webApp, mobileApp, design, social, seo, other)
     e.preventDefault()
     const form = e.target
     fetch("/", {
@@ -61,10 +76,14 @@ const ContactForm = () => {
         email,
         phone,
         message,
+
         website,
+        webApp,
         mobileApp,
         design,
+        social,
         seo,
+        other,
       }),
     })
       .then(() => navigate(form.getAttribute("action")))
@@ -120,8 +139,7 @@ const ContactForm = () => {
               <Form.Label>Phone</Form.Label>
               <Form.Control
                 name="phone"
-                type="tel"
-                pattern="[0-9]{10}"
+                type="string"
                 onChange={e => setPhone(e.target.value)}
               />
             </Form.Group>
@@ -146,7 +164,18 @@ const ContactForm = () => {
               <Row className="m-sm-3">
                 <Col xs={6} sm={4} md={3} className="mb-3 p-1">
                   <Form.Check
-                    label="mobileApp"
+                    label="Web Application"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="webApp"
+                    onChange={() => setWebApp(true)}
+                  />
+                </Col>
+              </Row>
+              <Row className="m-sm-3">
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="Mobile App"
                     type="checkbox"
                     aria-label="checkbox for following text input"
                     name="mobileApp"
@@ -157,7 +186,7 @@ const ContactForm = () => {
               <Row className="m-sm-3">
                 <Col xs={6} sm={4} md={3} className="mb-3 p-1">
                   <Form.Check
-                    label="design"
+                    label="Design"
                     type="checkbox"
                     aria-label="checkbox for following text input"
                     name="design"
@@ -168,11 +197,34 @@ const ContactForm = () => {
               <Row className="m-sm-3">
                 <Col xs={6} sm={4} md={3} className="mb-3 p-1">
                   <Form.Check
-                    label="seo"
+                    label="SEO"
                     type="checkbox"
                     aria-label="checkbox for following text input"
                     name="seo"
                     onChange={() => setSeo(true)}
+                  />
+                </Col>
+              </Row>
+              <Row className="m-sm-3">
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="Social Media"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="social"
+                    onChange={() => setSocial(true)}
+                  />
+                </Col>
+              </Row>
+
+              <Row className="m-sm-3">
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="other"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="other"
+                    onChange={() => setOther(true)}
                   />
                 </Col>
               </Row>
