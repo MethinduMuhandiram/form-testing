@@ -155,7 +155,7 @@ const ContactForm = () => {
                     label="Website"
                     type="checkbox"
                     aria-label="checkbox for following text input"
-                    name="Website"
+                    name="website"
                     // checked={checkedItems.includes(service)}
                     onChange={() => setWebsite(true)}
                   />
