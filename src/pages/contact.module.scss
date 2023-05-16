@@ -1,0 +1,108 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.contactPage {
+  background: #f1f1f4;
+}
+
+.heading {
+  position: relative;
+  color: white;
+  background-image: url("../../../images/pages/contact/contact.svg");
+  background-color: #0a7fbe;
+  min-height: 60vh;
+  background-size: cover;
+
+  @media (max-width: 760px) {
+    min-height: 50vh;
+  }
+}
+
+.textArea {
+  padding-top: 150px;
+
+  @media (max-width: 760px) {
+    padding-top: 100px;
+  }
+}
+
+.textContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(50, 50);
+}
+
+.contactCard {
+  background: #0a7fbe;
+  border-radius: 25px;
+  color: $white;
+  text-align: center;
+  .title {
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 160%;
+
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    color: #ffffff;
+  }
+}
+
+.form {
+  .button {
+    display: flex;
+    flex-direction: row;
+    background: #3472dc;
+    border: $dark-blue;
+    border-radius: 50px;
+    width: auto;
+    float: right;
+    font-size: 20px;
+    padding: 7px 50px 7px 50px;
+
+    color: $white;
+    &:hover {
+      background: $blue;
+      border: $blue;
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 100%;
+
+      justify-content: center;
+    }
+  }
+  .inputContact {
+    border: none;
+    border-bottom: 1px solid black;
+    background: #f4f1f1;
+    border-radius: 0;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.socialLinks {
+  margin-top: 50px;
+  padding: 10px;
+  justify-content: center;
+  justify-items: center;
+  li {
+    background: $white;
+    border-radius: 50px;
+    margin-right: 10px;
+    padding: 8px;
+    display: inline-flex;
+    color: #000;
+    font-size: larger;
+    margin: 0 17px 0 17px;
+  }
+}
