@@ -3,61 +3,53 @@ import { Form, Button, Row, Col } from "react-bootstrap"
 import { navigate } from "gatsby-link"
 
 // Form Helpers
-// function encode(data) {
-//   return Object.keys(data)
-//     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-//     .join("&")
-// }
-
 function encode(data) {
-  const formData = new FormData()
-
-  Object.keys(data).forEach(key => {
-    if (Array.isArray(data[key])) {
-      data[key].forEach(value => {
-        formData.append(key + "[]", value)
-      })
-    } else {
-      formData.append(key, data[key])
-    }
-  })
-
-  return new URLSearchParams(formData).toString()
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&")
 }
 
+// function encode(data) {
+//   const formData = new FormData()
+
+//   Object.keys(data).forEach(key => {
+//     if (Array.isArray(data[key])) {
+//       data[key].forEach(value => {
+//         formData.append(key + "[]", value)
+//       })
+//     } else {
+//       formData.append(key, data[key])
+//     }
+//   })
+
+//   return new URLSearchParams(formData).toString()
+// }
+
 const ContactForm = () => {
-  const checkboxList = [
-    "Website",
-    "Web Application",
-    "Mobile App",
-    "Social Media",
-    "Design",
-    "SEO",
-    "Other",
-  ]
+  // const checkboxList = [
+  //   "Website",
+  //   "Web Application",
+  //   "Mobile App",
+  //   "Social Media",
+  //   "Design",
+  //   "SEO",
+  //   "Other",
+  // ]
 
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
-  const [checkedItems, setCheckedItems] = useState([])
   const [message, setMessage] = useState("")
 
-  const handleCheckboxChange = event => {
-    const itemName = event.target.name
-
-    setCheckedItems(prevCheckedItems => {
-      if (prevCheckedItems.includes(itemName)) {
-        return prevCheckedItems.filter(item => item !== itemName)
-      } else {
-        return [...prevCheckedItems, itemName]
-      }
-    })
-  }
+  const [website, setWebsite] = useState(false)
+  const [mobileApp, setMobileApp] = useState(false)
+  const [design, setDesign] = useState(false)
+  const [seo, setSeo] = useState(false)
 
   const handleSubmit = e => {
+    console.log(website.name, mobileApp.name, design.name, seo.name)
     e.preventDefault()
-    console.log(checkedItems)
     const form = e.target
     fetch("/", {
       method: "POST",
@@ -69,7 +61,10 @@ const ContactForm = () => {
         email,
         phone,
         message,
-        services: checkedItems,
+        website,
+        mobileApp,
+        design,
+        seo,
       }),
     })
       .then(() => navigate(form.getAttribute("action")))
@@ -137,18 +132,49 @@ const ContactForm = () => {
             <Form.Group className="mb-3">
               <Form.Label>What service do you need ?</Form.Label>
               <Row className="m-sm-3">
-                {checkboxList.map(service => (
-                  <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                    <Form.Check
-                      label={service}
-                      type="checkbox"
-                      aria-label="checkbox for following text input"
-                      name={service}
-                      checked={checkedItems.includes(service)}
-                      onChange={handleCheckboxChange}
-                    />
-                  </Col>
-                ))}
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="Website"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="Website"
+                    // checked={checkedItems.includes(service)}
+                    onChange={() => setWebsite(true)}
+                  />
+                </Col>
+              </Row>
+              <Row className="m-sm-3">
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="mobileApp"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="mobileApp"
+                    onChange={() => setMobileApp(true)}
+                  />
+                </Col>
+              </Row>
+              <Row className="m-sm-3">
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="design"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="design"
+                    onChange={() => setDesign(true)}
+                  />
+                </Col>
+              </Row>
+              <Row className="m-sm-3">
+                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
+                  <Form.Check
+                    label="seo"
+                    type="checkbox"
+                    aria-label="checkbox for following text input"
+                    name="seo"
+                    onChange={() => setSeo(true)}
+                  />
+                </Col>
               </Row>
             </Form.Group>
           </Col>
