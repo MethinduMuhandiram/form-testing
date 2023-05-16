@@ -57,6 +57,7 @@ const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    console.log(checkedItems)
     const form = e.target
     fetch("/", {
       method: "POST",
@@ -76,7 +77,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className={`.text-secondary`}>
+    <div className={`text-secondary`}>
       <Form
         name="Contact"
         onSubmit={handleSubmit}
@@ -136,14 +137,14 @@ const ContactForm = () => {
             <Form.Group className="mb-3">
               <Form.Label>What service do you need ?</Form.Label>
               <Row className="m-sm-3">
-                {checkboxList.map(item => (
+                {checkboxList.map(service => (
                   <Col xs={6} sm={4} md={3} className="mb-3 p-1">
                     <Form.Check
-                      label={item}
+                      label={service}
                       type="checkbox"
                       aria-label="checkbox for following text input"
-                      name="service"
-                      checked={checkedItems.includes(item)}
+                      name={service}
+                      checked={checkedItems.includes(service)}
                       onChange={handleCheckboxChange}
                     />
                   </Col>
