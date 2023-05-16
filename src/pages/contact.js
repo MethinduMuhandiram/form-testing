@@ -91,7 +91,7 @@ const ContactForm = () => {
             <Form.Group className="mb-3">
               <Form.Label>First Name</Form.Label>
               <Form.Control
-                name="firstname"
+                name="firstName"
                 type="text"
                 onChange={e => setFirstName(e.target.value)}
               />
@@ -101,7 +101,7 @@ const ContactForm = () => {
             <Form.Group className="mb-3">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
-                name="lastname"
+                name="lastName"
                 type="text"
                 onChange={e => setLastName(e.target.value)}
               />
@@ -142,7 +142,7 @@ const ContactForm = () => {
                       label={item}
                       type="checkbox"
                       aria-label="checkbox for following text input"
-                      name={item}
+                      name="service"
                       checked={checkedItems.includes(item)}
                       onChange={handleCheckboxChange}
                     />
@@ -157,6 +157,7 @@ const ContactForm = () => {
             <Form.Group className="mb-md-3">
               <Form.Label className="mb-md-5">Message</Form.Label>
               <Form.Control
+                name="message"
                 type="text"
                 placeholder="Write your message"
                 onChange={e => setMessage(e.target.value)}
