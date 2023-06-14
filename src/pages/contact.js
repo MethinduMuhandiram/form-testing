@@ -136,6 +136,7 @@ const HelpForm = () => {
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}
+        action="/success"
       >
         <input type="hidden" name="form-name" value="help-form" />
         <p hidden>
