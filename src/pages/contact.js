@@ -1,256 +1,190 @@
 import React, { useState } from "react"
-import { Form, Button, Row, Col } from "react-bootstrap"
+import { Button, TextField } from "@mui/material"
 import { navigate } from "gatsby-link"
+// import upworkGreen from "../../images/home/help/upwork-green.png"
+// import fiverrBlack from "../../images/home/help/fiverr-black.png"
 
-// Form Helpers
-function encode(data) {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&")
-}
+const HelpForm = () => {
+  const [selectedServices, setSelectedServices] = useState([])
 
-// function encode(data) {
-//   const formData = new FormData()
+  const handleServiceClick = service => {
+    if (selectedServices.includes(service)) {
+      setSelectedServices(selectedServices.filter(item => item !== service))
+    } else {
+      setSelectedServices([...selectedServices, service])
+    }
+  }
 
-//   Object.keys(data).forEach(key => {
-//     if (Array.isArray(data[key])) {
-//       data[key].forEach(value => {
-//         formData.append(key + "[]", value)
-//       })
-//     } else {
-//       formData.append(key, data[key])
-//     }
-//   })
+  const handleSubmit = event => {
+    event.preventDefault()
+    const form = event.target
+    const formData = new FormData(form)
 
-//   return new URLSearchParams(formData).toString()
-// }
+    selectedServices.forEach(service => {
+      formData.append("services[]", service)
+    })
 
-const ContactForm = () => {
-  // const checkboxList = [
-  //   "Website",
-  //   "Web Application",
-  //   "Mobile App",
-  //   "Social Media",
-  //   "Design",
-  //   "SEO",
-  //   "Other",
-  // ]
-
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [message, setMessage] = useState("")
-
-  const [website, setWebsite] = useState(false)
-  const [mobileApp, setMobileApp] = useState(false)
-  const [design, setDesign] = useState(false)
-  const [seo, setSeo] = useState(false)
-  const [webApp, setWebApp] = useState(false)
-  const [social, setSocial] = useState(false)
-  const [other, setOther] = useState(false)
-
-  // const handleCheckboxChange = event => {
-  //   const itemName = event.target.name
-
-  //   setCheckedItems(prevCheckedItems => {
-  //     if (prevCheckedItems.includes(itemName)) {
-  //       return prevCheckedItems.filter(item => item !== itemName)
-  //     } else {
-  //       return [...prevCheckedItems, itemName]
-  //     }
-  //   })
-  // }
-
-  const handleSubmit = e => {
-    console.log(website, webApp, mobileApp, design, social, seo, other)
-    e.preventDefault()
-    const form = e.target
-    fetch("/", {
+    // Submit the form to Netlify or perform any other actions with the form data
+    fetch(form.action, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": "Contact",
-        firstName,
-        lastName,
-        email,
-        phone,
-        message,
-
-        website,
-        webApp,
-        mobileApp,
-        design,
-        social,
-        seo,
-        other,
-      }),
+      body: formData,
     })
       .then(() => navigate(form.getAttribute("action")))
       .catch(error => console.log(error))
   }
 
+  console.log(selectedServices)
+
   return (
-    <div className={`text-secondary`}>
-      <Form
-        name="Contact"
-        onSubmit={handleSubmit}
-        method="post"
-        action="/success/"
+    <div className="relative mx-auto p-10 w-full sm:w-[450px] shadow-2xl rounded-xl bg-white">
+      <p>I'm interested in...</p>
+
+      {/* services buttons  */}
+      <div className="flex flex-col md:flex-row justify-between my-3">
+        {/* Software Development  */}
+        <Button
+          variant={
+            selectedServices.includes("Software Development")
+              ? "contained"
+              : "outlined"
+          }
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+            px: 2,
+            marginBottom: { xs: "12px", md: 0 },
+          }}
+          onClick={() => handleServiceClick("Software Development")}
+        >
+          Software Development
+        </Button>
+
+        {/* Design */}
+        <Button
+          variant={
+            selectedServices.includes("Design") ? "contained" : "outlined"
+          }
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+            px: 2,
+            marginBottom: { xs: "12px", md: 0 },
+          }}
+          onClick={() => handleServiceClick("Design")}
+        >
+          Design
+        </Button>
+
+        {/* UI/UX */}
+        <Button
+          variant={
+            selectedServices.includes("UI/UX") ? "contained" : "outlined"
+          }
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+            px: 2,
+            marginBottom: { xs: "12px", md: 0 },
+          }}
+          onClick={() => handleServiceClick("UI/UX")}
+        >
+          UI/UX
+        </Button>
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-between">
+        {/* Social Media Management */}
+        <Button
+          variant={
+            selectedServices.includes("Social Media Management")
+              ? "contained"
+              : "outlined"
+          }
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+            px: 2,
+            marginBottom: { xs: "12px", md: 0 },
+          }}
+          onClick={() => handleServiceClick("Social Media Management")}
+        >
+          Social Media Management
+        </Button>
+
+        {/* Web Application */}
+        <Button
+          variant={
+            selectedServices.includes("Web Application")
+              ? "contained"
+              : "outlined"
+          }
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+            px: 2,
+            marginBottom: { xs: "12px", md: 0 },
+          }}
+          onClick={() => handleServiceClick("Web Application")}
+        >
+          Web Application
+        </Button>
+      </div>
+
+      <form
+        name="help-form"
+        method="POST"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
+        onSubmit={handleSubmit}
       >
-        <input type="hidden" name="form-name" value="Contact" />
-        <Row className="ps-lg-5 pb-lg-5">
-          <Col md={6} sm={12} className="px-lg-5">
-            <Form.Group className="mb-3">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                name="firstName"
-                type="text"
-                onChange={e => setFirstName(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6} sm={12} className="px-lg-5">
-            <Form.Group className="mb-3">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                name="lastName"
-                type="text"
-                onChange={e => setLastName(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="ps-lg-5  pb-lg-5">
-          <Col md={6} sm={12} className="px-lg-5">
-            <Form.Group className="mb-3">
-              <Form.Label>E-Mail</Form.Label>
-              <Form.Control
-                name="email"
-                type="email"
-                onChange={e => setEmail(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6} sm={12} className="px-lg-5">
-            <Form.Group className="mb-3">
-              <Form.Label>Phone</Form.Label>
-              <Form.Control
-                name="phone"
-                type="string"
-                onChange={e => setPhone(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="ms-lg-5 mb-sm-5">
-          <Col className="px-lg-5">
-            <Form.Group className="mb-3">
-              <Form.Label>What service do you need ?</Form.Label>
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="Website"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="website"
-                    // checked={checkedItems.includes(service)}
-                    onChange={() => setWebsite(true)}
-                  />
-                </Col>
-              </Row>
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="Web Application"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="webApp"
-                    onChange={() => setWebApp(true)}
-                  />
-                </Col>
-              </Row>
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="Mobile App"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="mobileApp"
-                    onChange={() => setMobileApp(true)}
-                  />
-                </Col>
-              </Row>
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="Design"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="design"
-                    onChange={() => setDesign(true)}
-                  />
-                </Col>
-              </Row>
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="SEO"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="seo"
-                    onChange={() => setSeo(true)}
-                  />
-                </Col>
-              </Row>
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="Social Media"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="social"
-                    onChange={() => setSocial(true)}
-                  />
-                </Col>
-              </Row>
+        <input type="hidden" name="form-name" value="help-form" />
+        <p hidden>
+          <label>
+            Don't fill this out: <input name="bot-field" />
+          </label>
+        </p>
 
-              <Row className="m-sm-3">
-                <Col xs={6} sm={4} md={3} className="mb-3 p-1">
-                  <Form.Check
-                    label="other"
-                    type="checkbox"
-                    aria-label="checkbox for following text input"
-                    name="other"
-                    onChange={() => setOther(true)}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="ms-lg-5">
-          <Col className="px-lg-5">
-            <Form.Group className="mb-md-3">
-              <Form.Label className="mb-md-5">Message</Form.Label>
-              <Form.Control
-                name="message"
-                type="text"
-                placeholder="Write your message"
-                onChange={e => setMessage(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Button className={` m-sm-5 mt-3 `} type="submit">
-          Submit
+        <div className="my-10">
+          <TextField
+            sx={{ width: "100%", paddingBottom: "10px" }}
+            id="standard-basic"
+            label="Your name"
+            variant="standard"
+          />
+          <TextField
+            sx={{ width: "100%", paddingBottom: "10px" }}
+            id="standard-basic"
+            label="Your email"
+            variant="standard"
+          />
+          <TextField
+            sx={{ width: "100%", paddingBottom: "10px" }}
+            id="standard-basic"
+            label="Message"
+            variant="standard"
+          />
+        </div>
+        <Button
+          variant="contained"
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+            width: { xs: "100%", md: "50%" },
+          }}
+        >
+          Send Message
         </Button>
-      </Form>
+      </form>
+
+      <div className="pt-12 text-center mx-auto ">
+        <p>Featured On</p>
+        <div className="flex items-start justify-center mt-5">
+          {/* <img className="mr-5" src={upworkGreen} />
+          <img src={fiverrBlack} /> */}
+        </div>
+      </div>
     </div>
   )
 }
 
-export default ContactForm
+export default HelpForm

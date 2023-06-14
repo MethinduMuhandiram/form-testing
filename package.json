@@ -16,7 +16,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.12.2",
+    "@mui/material": "^5.13.5",
     "@truffle/hdwallet-provider": "^1.0.41-1",
     "gatsby": "^4.24.0",
     "gatsby-image": "^3.11.0",
