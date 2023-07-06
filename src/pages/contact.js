@@ -35,7 +35,7 @@ const HelpForm = () => {
         name,
         email,
         message,
-        selectedServices,
+        selectedServices: selectedServices.join(", "),
       }),
     })
       .then(() => navigate(form.getAttribute("action")))
@@ -45,97 +45,6 @@ const HelpForm = () => {
   return (
     <div className="relative mx-auto p-10 w-full sm:w-[450px] shadow-2xl rounded-xl bg-white">
       <p>I'm interested in...</p>
-
-      {/* services buttons  */}
-      <div className="flex flex-col md:flex-row justify-between my-3">
-        {/* Software Development  */}
-        <Button
-          variant={
-            selectedServices.includes("Software Development")
-              ? "contained"
-              : "outlined"
-          }
-          sx={{
-            whiteSpace: "nowrap",
-            borderRadius: "5px",
-            px: 2,
-            marginBottom: { xs: "12px", md: 0 },
-          }}
-          onClick={() => handleServiceClick("Software Development")}
-        >
-          Software Development
-        </Button>
-
-        {/* Design */}
-        <Button
-          variant={
-            selectedServices.includes("Design") ? "contained" : "outlined"
-          }
-          sx={{
-            whiteSpace: "nowrap",
-            borderRadius: "5px",
-            px: 2,
-            marginBottom: { xs: "12px", md: 0 },
-          }}
-          onClick={() => handleServiceClick("Design")}
-        >
-          Design
-        </Button>
-
-        {/* UI/UX */}
-        <Button
-          variant={
-            selectedServices.includes("UI/UX") ? "contained" : "outlined"
-          }
-          sx={{
-            whiteSpace: "nowrap",
-            borderRadius: "5px",
-            px: 2,
-            marginBottom: { xs: "12px", md: 0 },
-          }}
-          onClick={() => handleServiceClick("UI/UX")}
-        >
-          UI/UX
-        </Button>
-      </div>
-
-      <div className="flex flex-col md:flex-row justify-between">
-        {/* Social Media Management */}
-        <Button
-          variant={
-            selectedServices.includes("Social Media Management")
-              ? "contained"
-              : "outlined"
-          }
-          sx={{
-            whiteSpace: "nowrap",
-            borderRadius: "5px",
-            px: 2,
-            marginBottom: { xs: "12px", md: 0 },
-          }}
-          onClick={() => handleServiceClick("Social Media Management")}
-        >
-          Social Media Management
-        </Button>
-
-        {/* Web Application */}
-        <Button
-          variant={
-            selectedServices.includes("Web Application")
-              ? "contained"
-              : "outlined"
-          }
-          sx={{
-            whiteSpace: "nowrap",
-            borderRadius: "5px",
-            px: 2,
-            marginBottom: { xs: "12px", md: 0 },
-          }}
-          onClick={() => handleServiceClick("Web Application")}
-        >
-          Web Application
-        </Button>
-      </div>
 
       <form
         name="help-form"
@@ -151,6 +60,103 @@ const HelpForm = () => {
             Don't fill this out: <input name="bot-field" />
           </label>
         </p>
+
+        {/* services buttons  */}
+        <div className="flex flex-col md:flex-row justify-between my-3">
+          {/* Software Development  */}
+          <Button
+            variant={
+              selectedServices.includes("Software Development")
+                ? "contained"
+                : "outlined"
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              borderRadius: "5px",
+              px: 2,
+              marginBottom: { xs: "12px", md: 0 },
+            }}
+            onClick={() => handleServiceClick("Software Development")}
+          >
+            Software Development
+          </Button>
+
+          {/* Design */}
+          <Button
+            variant={
+              selectedServices.includes("Design") ? "contained" : "outlined"
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              borderRadius: "5px",
+              px: 2,
+              marginBottom: { xs: "12px", md: 0 },
+            }}
+            onClick={() => handleServiceClick("Design")}
+          >
+            Design
+          </Button>
+
+          {/* UI/UX */}
+          <Button
+            variant={
+              selectedServices.includes("UI/UX") ? "contained" : "outlined"
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              borderRadius: "5px",
+              px: 2,
+              marginBottom: { xs: "12px", md: 0 },
+            }}
+            onClick={() => handleServiceClick("UI/UX")}
+          >
+            UI/UX
+          </Button>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between">
+          {/* Social Media Management */}
+          <Button
+            variant={
+              selectedServices.includes("Social Media Management")
+                ? "contained"
+                : "outlined"
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              borderRadius: "5px",
+              px: 2,
+              marginBottom: { xs: "12px", md: 0 },
+            }}
+            onClick={() => handleServiceClick("Social Media Management")}
+          >
+            Social Media Management
+          </Button>
+
+          {/* Web Application */}
+          <Button
+            variant={
+              selectedServices.includes("Web Application")
+                ? "contained"
+                : "outlined"
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              borderRadius: "5px",
+              px: 2,
+              marginBottom: { xs: "12px", md: 0 },
+            }}
+            onClick={() => handleServiceClick("Web Application")}
+          >
+            Web Application
+          </Button>
+        </div>
+
+        <input
+          type="hidden"
+          name="selectedServices"
+          value={selectedServices.join(", ")} // Convert array to comma-separated string
+        />
 
         <div className="my-10">
           <TextField
