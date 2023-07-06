@@ -139,11 +139,11 @@ const HelpForm = () => {
 
       <form
         name="help-form"
-        method="POST"
+        method="post"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
-        onSubmit={handleSubmit}
         action="/success"
+        onSubmit={handleSubmit}
       >
         <input type="hidden" name="form-name" value="help-form" />
         <p hidden>
@@ -155,7 +155,9 @@ const HelpForm = () => {
         <div className="my-10">
           <TextField
             sx={{ width: "100%", paddingBottom: "10px" }}
-            id="standard-basic"
+            id="name"
+            name="name"
+            type="text"
             label="Your name"
             variant="standard"
             value={name}
@@ -163,7 +165,9 @@ const HelpForm = () => {
           />
           <TextField
             sx={{ width: "100%", paddingBottom: "10px" }}
-            id="standard-basic"
+            id="email"
+            name="email"
+            type="email"
             label="Your email"
             variant="standard"
             value={email}
@@ -171,7 +175,9 @@ const HelpForm = () => {
           />
           <TextField
             sx={{ width: "100%", paddingBottom: "10px" }}
-            id="standard-basic"
+            id="message"
+            name="message"
+            type="text"
             label="Message"
             variant="standard"
             value={message}
