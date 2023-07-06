@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import { Button, TextField } from "@mui/material"
 import { navigate } from "gatsby-link"
-// import upworkGreen from "../../images/home/help/upwork-green.png"
-// import fiverrBlack from "../../images/home/help/fiverr-black.png"
 
 const HelpForm = () => {
   const [selectedServices, setSelectedServices] = useState([])
@@ -32,8 +30,6 @@ const HelpForm = () => {
       .then(() => navigate(form.getAttribute("action")))
       .catch(error => console.log(error))
   }
-
-  console.log(selectedServices)
 
   return (
     <div className="relative mx-auto p-10 w-full sm:w-[450px] shadow-2xl rounded-xl bg-white">
@@ -167,6 +163,7 @@ const HelpForm = () => {
         </div>
         <Button
           variant="contained"
+          type="submit"
           sx={{
             whiteSpace: "nowrap",
             borderRadius: "5px",
@@ -176,14 +173,6 @@ const HelpForm = () => {
           Send Message
         </Button>
       </form>
-
-      <div className="pt-12 text-center mx-auto ">
-        <p>Featured On</p>
-        <div className="flex items-start justify-center mt-5">
-          {/* <img className="mr-5" src={upworkGreen} />
-          <img src={fiverrBlack} /> */}
-        </div>
-      </div>
     </div>
   )
 }
