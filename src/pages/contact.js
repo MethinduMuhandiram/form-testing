@@ -2,8 +2,19 @@ import React, { useState } from "react"
 import { Button, TextField } from "@mui/material"
 import { navigate } from "gatsby-link"
 
+// Form Helpers
+function encode(data) {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&")
+}
+
 const HelpForm = () => {
   const [selectedServices, setSelectedServices] = useState([])
+
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
 
   const handleServiceClick = service => {
     if (selectedServices.includes(service)) {
@@ -13,19 +24,19 @@ const HelpForm = () => {
     }
   }
 
-  const handleSubmit = event => {
-    event.preventDefault()
-    const form = event.target
-    const formData = new FormData(form)
-
-    selectedServices.forEach(service => {
-      formData.append("services[]", service)
-    })
-
-    // Submit the form to Netlify or perform any other actions with the form data
-    fetch(form.action, {
+  const handleSubmit = e => {
+    e.preventDefault()
+    const form = e.target
+    fetch("/", {
       method: "POST",
-      body: formData,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        "form-name": "help-form",
+        name,
+        email,
+        message,
+        selectedServices,
+      }),
     })
       .then(() => navigate(form.getAttribute("action")))
       .catch(error => console.log(error))
@@ -147,18 +158,24 @@ const HelpForm = () => {
             id="standard-basic"
             label="Your name"
             variant="standard"
+            value={name}
+            onChange={e => setName(e.target.value)}
           />
           <TextField
             sx={{ width: "100%", paddingBottom: "10px" }}
             id="standard-basic"
             label="Your email"
             variant="standard"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <TextField
             sx={{ width: "100%", paddingBottom: "10px" }}
             id="standard-basic"
             label="Message"
             variant="standard"
+            value={message}
+            onChange={e => setMessage(e.target.value)}
           />
         </div>
         <Button
