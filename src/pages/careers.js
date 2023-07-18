@@ -27,10 +27,9 @@ export default function Career() {
         name,
         email,
         phone,
-        file,
       }),
     })
-      .then(() => navigate(form.getAttribute("/success")))
+      .then(() => navigate(form.getAttribute("action")))
       .catch(error => alert(error))
   }
 
@@ -43,7 +42,7 @@ export default function Career() {
       <form
         name="career-form"
         method="post"
-        action="/"
+        action="/success"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}
@@ -58,8 +57,9 @@ export default function Career() {
             <Grid item md={6} sx={{ width: "100%" }}>
               <b>Your Name</b>
               <TextField
-                name="name"
                 sx={{ width: "100%" }}
+                name="name"
+                type="text"
                 id="standard-basic"
                 variant="standard"
                 value={name}
@@ -69,8 +69,9 @@ export default function Career() {
             <Grid item md={6} sx={{ width: "100%" }}>
               <b>Phone Number</b>
               <TextField
-                name="phone"
                 sx={{ width: "100%" }}
+                name="phone"
+                type="text"
                 id="standard-basic"
                 variant="standard"
                 value={phone}
@@ -81,6 +82,7 @@ export default function Career() {
               <b>Your Email</b>
               <TextField
                 name="email"
+                type="email"
                 sx={{ width: "100%" }}
                 id="standard-basic"
                 variant="standard"
@@ -90,11 +92,11 @@ export default function Career() {
             </Grid>
           </Grid>
 
-          <FormControl sx={{ width: "100%", marginTop: "30px" }}>
+          {/* <FormControl sx={{ width: "100%", marginTop: "30px" }}>
             <b>CV or Resume</b>
             <p className="mb-2 text-sm">(Maximum upload file size: 5MB)</p>
             <FileUploader action={setFile} />
-          </FormControl>
+          </FormControl> */}
         </div>
         <Button
           variant="contained"
