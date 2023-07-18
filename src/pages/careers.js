@@ -21,6 +21,7 @@ export default function Career() {
     const form = e.target
     fetch("/", {
       method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
         "form-name": "career-form",
         name,
@@ -29,7 +30,7 @@ export default function Career() {
         file,
       }),
     })
-      .then(() => navigate(form.getAttribute("action")))
+      .then(() => navigate(form.getAttribute("/success")))
       .catch(error => alert(error))
   }
 
@@ -42,7 +43,7 @@ export default function Career() {
       <form
         name="career-form"
         method="post"
-        action="/success"
+        action="/"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}
@@ -57,6 +58,7 @@ export default function Career() {
             <Grid item md={6} sx={{ width: "100%" }}>
               <b>Your Name</b>
               <TextField
+                name="name"
                 sx={{ width: "100%" }}
                 id="standard-basic"
                 variant="standard"
@@ -67,6 +69,7 @@ export default function Career() {
             <Grid item md={6} sx={{ width: "100%" }}>
               <b>Phone Number</b>
               <TextField
+                name="phone"
                 sx={{ width: "100%" }}
                 id="standard-basic"
                 variant="standard"
@@ -77,6 +80,7 @@ export default function Career() {
             <Grid item md={6} sx={{ width: "100%" }}>
               <b>Your Email</b>
               <TextField
+                name="email"
                 sx={{ width: "100%" }}
                 id="standard-basic"
                 variant="standard"
