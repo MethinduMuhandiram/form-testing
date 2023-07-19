@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Container, Row, Col, Form, Button } from "react-bootstrap"
-import FileUploader from "./fileUploader"
 import { navigate } from "gatsby"
+
+import FileUploader from "../components/fileUploader"
 
 // Form Helpers
 function encode(data) {
