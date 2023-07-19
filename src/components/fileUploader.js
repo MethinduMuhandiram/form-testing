@@ -1,27 +1,18 @@
 import React, { useState } from "react"
+import { Button } from "react-bootstrap"
 import Dropzone from "react-dropzone"
 import { FcOk, FcDocument } from "react-icons/fc"
 import { FaWindowClose } from "react-icons/fa"
 
 export default function FileUploader({ action, customText }) {
   const [fileNames, setFileNames] = useState([])
-  const [errorMessage, setErrorMessage] = useState("")
-
   const handleDrop = acceptedFiles => {
-    const file = acceptedFiles[0]
-    if (file && file.size > 5 * 1024 * 1024) {
-      setErrorMessage("File size exceeds 5MB limit.")
-      return
-    }
-    action(file)
-    setFileNames(acceptedFiles.map(file => file.name))
-    setErrorMessage("")
+    action(acceptedFiles[0])
+    return setFileNames(acceptedFiles.map(file => file.name))
   }
-
   const clearFile = () => {
     action(null)
-    setFileNames([])
-    setErrorMessage("")
+    return setFileNames([])
   }
 
   return (
@@ -29,11 +20,9 @@ export default function FileUploader({ action, customText }) {
       <Dropzone onDrop={handleDrop}>
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps({ className: "dropzone" })}>
-            <input {...getInputProps()} name="file" type="file" id="file" />
-            <FcDocument className="mx-auto text-3xl" />
-            <p className="mb-0">
-              {errorMessage || "Drag'n'drop a file, or click to select file"}
-            </p>
+            <input {...getInputProps()} name="file" />
+            <FcDocument className="h1" />
+            <p className="mb-0">Drag'n'drop a file, or click to select file</p>
           </div>
         )}
       </Dropzone>
@@ -41,18 +30,18 @@ export default function FileUploader({ action, customText }) {
       {/* Filename */}
       <>
         {fileNames.length > 0 && (
-          <strong className="flex items-center">
+          <strong className="d-flex align-items-center">
             <FcOk className="me-3" /> Uploaded file:
           </strong>
         )}
         <ul style={{ listStyle: "none" }}>
           {fileNames.map(fileName => (
             <li key={fileName}>
-              <div className={`flex items-center my-3`}>
-                <p className={`mr-5 mb-0`}>- {fileName}</p>
-                <button onClick={clearFile}>
-                  <FaWindowClose className="text-red-400" />
-                </button>
+              <div className={`d-flex align-items-center my-3`}>
+                <p className={`me-5 mb-0`}>- {fileName}</p>
+                <Button variant="" onClick={clearFile}>
+                  <FaWindowClose color="danger" />
+                </Button>
               </div>
             </li>
           ))}
