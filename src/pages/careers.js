@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { navigate } from "gatsby-link"
+import { navigate } from "gatsby"
 import { Container, Button, TextField, FormControl, Grid } from "@mui/material"
 
 import FileUploader from "../components/fileUploader"
@@ -24,7 +24,6 @@ export default function Career() {
     const form = e.target
     fetch("/", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
         "form-name": "career-form",
         name,
