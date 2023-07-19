@@ -92,11 +92,11 @@ export default function Career() {
             </Grid>
           </Grid>
 
-          {/* <FormControl sx={{ width: "100%", marginTop: "30px" }}>
+          <FormControl sx={{ width: "100%", marginTop: "30px" }}>
             <b>CV or Resume</b>
             <p className="mb-2 text-sm">(Maximum upload file size: 5MB)</p>
             <FileUploader action={setFile} />
-          </FormControl> */}
+          </FormControl>
         </div>
         <Button
           type="submit"
