@@ -4,10 +4,13 @@ import { Container, Button, TextField, FormControl, Grid } from "@mui/material"
 
 import FileUploader from "../components/fileUploader"
 
+// Form Helpers
 function encode(data) {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&")
+  const formData = new FormData()
+  Object.keys(data).forEach(k => {
+    formData.append(k, data[k])
+  })
+  return formData
 }
 
 export default function Career() {
@@ -27,6 +30,7 @@ export default function Career() {
         name,
         email,
         phone,
+        file,
       }),
     })
       .then(() => navigate(form.getAttribute("action")))
