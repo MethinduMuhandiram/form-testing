@@ -99,6 +99,7 @@ export default function Career() {
           </FormControl> */}
         </div>
         <Button
+          type="submit"
           variant="contained"
           sx={{
             whiteSpace: "nowrap",
