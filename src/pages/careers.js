@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { Container, Row, Col, Form, Button } from "react-bootstrap"
-import { navigate } from "gatsby"
+import { navigate } from "gatsby-link"
+import { Container, Button, TextField, FormControl, Grid } from "@mui/material"
 
 import FileUploader from "../components/fileUploader"
 
@@ -13,22 +13,23 @@ function encode(data) {
   return formData
 }
 
-export default function Join() {
-  const [file, setFile] = useState(null)
-  const [position, setPosition] = useState("Business Development Executive")
+export default function Career() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [file, setFile] = useState(null)
 
   const handleSubmit = e => {
     e.preventDefault()
     const form = e.target
     fetch("/", {
       method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
-        "form-name": "careerForm",
+        "form-name": "career-form",
         name,
-        position,
         email,
+        phone,
         file,
       }),
     })
@@ -37,110 +38,81 @@ export default function Join() {
   }
 
   return (
-    <Container className="my-5 py-5  px-3 px-md-0">
-      <Row className="g-5">
-        <Col md={6}>
-          <h1 className="mb-3">
-            <strong>Join Our Winning Team</strong>
-          </h1>
-          <p>
-            At Asia Corp Insurance, we empower our staff to be agile,
-            collaborative, and trustworthy, giving them a chance to have
-            experiences and successes that truly matter, situations that
-            challenge and develop their skills and help them grow.
-          </p>
-          <p>
-            Everyone has a chance to make an impact and create those moments
-            that make you feel proud.
-          </p>
-          <p>Join our winning team today and become part of Asia Corp.</p>
-          <iframe
-            title="google-places"
-            src="https://www.google.com/maps/embed?pb=!4v1646907162176!6m8!1m7!1sksw7QL5q_HVpJgIrurFUvA!2m2!1d6.933035154890928!2d79.84330418394356!3f107.75646944940351!4f40.719880173440686!5f0.4000000000000002"
-            style={{
-              border: 0,
-              width: "100%",
-              height: "250px",
-              maxWidth: "100%",
-            }}
-            allowFullscreen=""
-            loading="lazy"
-          ></iframe>
-        </Col>
-
-        <Col md={6}>
-          <Form
-            name="careerForm"
-            method="post"
-            action="/success/"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-            onSubmit={handleSubmit}
-          >
-            {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
-            <input type="hidden" name="form-name" value="careerForm" />
-            <label style={{ display: "none" }}>
-              Don’t fill this out: <input name="bot-field" />
-            </label>
-
-            <Form.Group>
-              <Form.Label>Your Name</Form.Label>
-              <Form.Control
+    <Container
+      sx={{
+        margin: "3rem auto",
+      }}
+    >
+      <form
+        name="career-form"
+        method="post"
+        action="/success"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        onSubmit={handleSubmit}
+      >
+        {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
+        <input type="hidden" name="form-name" value="career-form" />
+        <label style={{ display: "none" }}>
+          Don’t fill this out: <input name="bot-field" />
+        </label>
+        <div className="my-10">
+          <Grid container spacing={3}>
+            <Grid item md={6} sx={{ width: "100%" }}>
+              <b>Your Name</b>
+              <TextField
+                sx={{ width: "100%" }}
                 name="name"
                 type="text"
-                required
-                placeholder="Your Name"
-                size="lg"
+                id="standard-basic"
+                variant="standard"
                 value={name}
-                onChange={e => {
-                  setName(e.target.value)
-                }}
+                onChange={e => setName(e.target.value)}
               />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
+            </Grid>
+            <Grid item md={6} sx={{ width: "100%" }}>
+              <b>Phone Number</b>
+              <TextField
+                sx={{ width: "100%" }}
+                name="phone"
+                type="text"
+                id="standard-basic"
+                variant="standard"
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+              />
+            </Grid>
+            <Grid item md={6} sx={{ width: "100%" }}>
+              <b>Your Email</b>
+              <TextField
                 name="email"
                 type="email"
-                required
-                placeholder="Your Email"
-                size="lg"
+                sx={{ width: "100%" }}
+                id="standard-basic"
+                variant="standard"
                 value={email}
-                onChange={e => {
-                  setEmail(e.target.value)
-                }}
+                onChange={e => setEmail(e.target.value)}
               />
-            </Form.Group>
+            </Grid>
+          </Grid>
 
-            <Form.Group>
-              <Form.Label>Position or Designation</Form.Label>
-              <Form.Control
-                name="position"
-                as="select"
-                size="lg"
-                value={position}
-                onChange={e => {
-                  setPosition(e.target.value)
-                }}
-              >
-                <option>Call Center Agent</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>CV or Resume</Form.Label>
-              <FileUploader action={setFile} />
-            </Form.Group>
-            <Button
-              type="submit"
-              style={{ width: "100%" }}
-              disabled={!name || !email || !file}
-            >
-              Submit
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+          <FormControl sx={{ width: "100%", marginTop: "30px" }}>
+            <b>CV or Resume</b>
+            <p className="mb-2 text-sm">(Maximum upload file size: 5MB)</p>
+            <FileUploader action={setFile} />
+          </FormControl>
+        </div>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            whiteSpace: "nowrap",
+            borderRadius: "5px",
+          }}
+        >
+          Apply
+        </Button>
+      </form>
     </Container>
   )
 }
